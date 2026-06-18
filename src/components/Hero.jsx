@@ -1,21 +1,33 @@
+import profileImage from '../assets/photo.jpg';
 function Hero() {
   return (
     <section id="home" className="section hero">
-      <p className="intro">Hello, I'm</p>
+        <div className="hero-content">
+            <div className="hero-text-box">
+            <p className="intro">Hello, I'm</p>
 
-      <h1>Milan Harsha</h1>
+            <h1>Milan Harsha</h1>
 
-      <h3>ICT Undergraduate | DevOps Learner</h3>
+            <h3>Networking Enthusiast | Cloud Explorer | Security Learner | DevOps Learner</h3>
 
-      <p className="hero-text">
-        I am building this portfolio as part of my DevOps assignment to demonstrate
-        React development, Git version control, GitHub Actions, and CI/CD pipelines.
-      </p>
+            <p className="hero-text">
+                Passionate about Network Engineering, Cyber Security, Cloud Computing, and DevOps Engineering, with a focus on building secure, reliable, and scalable digital solutions.
+                I enjoy working with modern infrastructure, automation, and cloud-based technologies to improve system performance and efficiency. 
+                Always eager to learn, solve real-world problems, and contribute to teams that value innovation, security, and continuous improvement.
+            </p>
 
-      <div className="hero-buttons">
-        <a href="#projects" className="btn primary">View Projects</a>
-        <a href="#pipeline" className="btn secondary">View Pipeline</a>
-      </div>
+            <div className="hero-buttons">
+                <a href="#projects" className="btn primary">View Projects</a>
+                <a href="#pipeline" className="btn secondary">Download CV</a>
+            </div>
+        </div>
+
+        <div className="hero-image-box">
+          <img src={profileImage} alt="Milan Harsha" className="profile-img" />
+        </div>
+        </div>
+
+
     </section>
   );
 }
