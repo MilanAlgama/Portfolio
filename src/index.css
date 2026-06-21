@@ -1,16 +1,211 @@
-:root {
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html {
+* {
   scroll-behavior: smooth;
 }
 
+html, body {
+  background-color: #070b14;
+  color: #eef2fb;
+}
+
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #070b14;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4cc9f0, #9d7bea);
+  border-radius: 6px;
+}
+
+/* Visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #4cc9f0;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Glass panel */
+.glass {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* top hairline glow that appears on hover of a card */
+.glow-edge {
+  position: relative;
+  isolation: isolate;
+}
+.glow-edge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(76,201,240,0.6), rgba(157,123,234,0.6));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+.glow-edge:hover::before {
+  opacity: 1;
+}
+
+/* gradient text */
+.text-gradient {
+  background: linear-gradient(120deg, #4cc9f0, #9d7bea 60%, #4cc9f0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* code-comment style eyebrow */
+.eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: #4cc9f0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+@layer components {
+  .page-shell { @apply relative min-h-screen font-body text-ink; }
+  .content-layer { @apply relative z-10; }
+  .section-space { @apply px-6 py-28; }
+  .container-wide { @apply mx-auto max-w-5xl; }
+  .container-medium { @apply mx-auto max-w-3xl; }
+  .center-text { @apply text-center; }
+  .centered-container { @apply mx-auto max-w-3xl text-center; }
+  .section-title-space { @apply mb-12 text-center; }
+  .section-title { @apply font-display text-3xl font-bold sm:text-4xl; }
+
+  .sky-background { @apply fixed inset-0 z-0 overflow-hidden bg-void; }
+  .twinkle-star { @apply absolute rounded-full bg-white animate-twinkle; }
+  .cloud-blob-one { @apply absolute -top-24 -left-16 h-[38rem] w-[38rem] rounded-full bg-sky/60 blur-[100px] animate-drift1; }
+  .cloud-blob-two { @apply absolute top-1/4 -right-24 h-[34rem] w-[34rem] rounded-full bg-aurora/55 blur-[100px] animate-drift2; }
+  .cloud-blob-three { @apply absolute bottom-[-6rem] left-1/4 h-[30rem] w-[30rem] rounded-full bg-sky/35 blur-[90px] animate-drift1; }
+  .cloud-blob-four { @apply absolute bottom-1/4 right-1/3 h-[24rem] w-[24rem] rounded-full bg-aurora/30 blur-[90px] animate-drift2; }
+  .background-vignette { @apply absolute inset-0 bg-gradient-to-b from-void/10 via-void/40 to-void; }
+  .cursor-light { @apply pointer-events-none fixed left-0 top-0 z-[1] h-[400px] w-[400px] rounded-full mix-blend-screen opacity-[0.12] transition-transform duration-100 ease-out hidden md:block; }
+
+  .navbar { @apply fixed top-0 z-50 w-full transition-all duration-300; }
+  .navbar-scrolled { @apply glass-strong shadow-glow; }
+  .navbar-clear { @apply bg-transparent; }
+  .navbar-inner { @apply mx-auto flex max-w-6xl items-center justify-between px-6 py-4; }
+  .brand-link { @apply font-display text-lg font-semibold tracking-tight text-ink; }
+  .brand-dot { @apply text-sky; }
+  .desktop-links { @apply hidden items-center gap-8 md:flex; }
+  .nav-link { @apply font-mono text-sm transition-colors; }
+  .nav-link-active { @apply text-sky; }
+  .nav-link-muted { @apply text-muted hover:text-ink; }
+  .resume-pill { @apply hidden items-center gap-2 rounded-full bg-aurora-gradient px-4 py-2 font-mono text-sm font-medium text-void shadow-glow transition-transform hover:scale-105 md:flex; }
+  .menu-toggle { @apply text-ink md:hidden; }
+  .mobile-menu { @apply glass-strong overflow-hidden md:hidden; }
+  .mobile-menu-list { @apply flex flex-col gap-1 px-6 py-4; }
+  .mobile-nav-link { @apply block py-2 font-mono text-sm text-muted hover:text-sky; }
+  .mobile-resume-space { @apply pt-2; }
+  .mobile-resume-pill { @apply flex w-fit items-center gap-2 rounded-full bg-aurora-gradient px-4 py-2 font-mono text-sm font-medium text-void; }
+
+  .hero-section { @apply relative flex min-h-screen items-center px-6 pt-24; }
+  .hero-grid { @apply mx-auto grid w-full max-w-6xl items-center gap-12 md:grid-cols-[1.3fr_1fr]; }
+  .hero-eyebrow { @apply eyebrow mb-4; }
+  .hero-title { @apply font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl; }
+  .hero-tagline { @apply mt-3 font-display text-2xl text-muted sm:text-3xl; }
+  .typewriter-line { @apply mt-6 flex h-8 items-center font-mono text-lg text-sky sm:text-xl; }
+  .typewriter-cursor { @apply ml-1 inline-block h-5 w-[2px] animate-blink bg-sky; }
+  .hero-actions { @apply mt-8 flex flex-wrap items-center gap-4; }
+  .primary-button { @apply rounded-full bg-aurora-gradient px-6 py-3 font-mono text-sm font-medium text-void shadow-glow transition-transform hover:scale-105; }
+  .secondary-button { @apply glass glow-edge rounded-full px-6 py-3 font-mono text-sm font-medium text-ink transition-transform hover:scale-105; }
+  .social-links { @apply mt-8 flex gap-5 text-muted; }
+  .social-link { @apply transition-colors hover:text-sky; }
+  .code-card-wrap { @apply hidden justify-self-center md:block; }
+  .code-card { @apply glass-strong glow-edge relative rounded-3xl p-8 font-mono text-sm text-muted shadow-glow; }
+  .window-dots { @apply mb-4 flex gap-2; }
+  .red-dot { @apply h-3 w-3 rounded-full bg-red-400/70; }
+  .yellow-dot { @apply h-3 w-3 rounded-full bg-yellow-400/70; }
+  .green-dot { @apply h-3 w-3 rounded-full bg-green-400/70; }
+  .code-indent { @apply pl-4; }
+  .scroll-cue { @apply absolute bottom-10 left-1/2 -translate-x-1/2 text-muted; }
+
+  .about-grid { @apply grid items-start gap-10 md:grid-cols-[260px_1fr]; }
+  .avatar-wrap { @apply flex justify-center md:justify-start; }
+  .avatar-shell { @apply relative; }
+  .avatar-glow { @apply absolute -inset-3 rounded-full bg-aurora-gradient opacity-40 blur-2xl; }
+  .avatar-circle { @apply glass-strong relative flex h-44 w-44 items-center justify-center rounded-full text-4xl font-display font-bold text-gradient; }
+  .bio-card { @apply glass glow-edge rounded-2xl p-8; }
+  .bio-text { @apply text-muted leading-relaxed; }
+  .paragraph-space { @apply mb-4; }
+
+  .skill-groups { @apply space-y-10; }
+  .skill-group-label { @apply mb-4 font-mono text-sm text-muted; }
+  .skill-list { @apply flex flex-wrap gap-4; }
+  .skill-pill { @apply glass glow-edge flex items-center gap-3 rounded-xl px-5 py-3; }
+  .skill-name { @apply font-medium text-ink; }
+
+  .project-grid { @apply grid gap-6 sm:grid-cols-2; }
+  .project-card { @apply glass glow-edge flex h-full flex-col rounded-2xl p-6; }
+  .project-title { @apply font-display text-xl font-semibold text-ink; }
+  .project-copy { @apply mt-3 flex-1 text-sm leading-relaxed text-muted; }
+  .tech-list { @apply mt-4 flex flex-wrap gap-2; }
+  .tech-pill { @apply rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-sky; }
+  .project-links { @apply mt-5 flex gap-4 text-muted; }
+  .project-link { @apply flex items-center gap-1.5 text-sm transition-colors hover:text-sky; }
+  .add-project-card { @apply flex h-full min-h-[220px] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 p-6 text-muted transition-colors hover:border-sky hover:text-sky; }
+  .add-project-text { @apply font-mono text-sm; }
+  .add-project-hint { @apply max-w-[200px] text-center font-mono text-xs text-sky; }
+  .full-height { @apply h-full; }
+
+  .education-timeline { @apply relative ml-4 border-l border-white/10 pl-8; }
+  .education-item { @apply relative mb-10 last:mb-0; }
+  .timeline-icon { @apply glass absolute -left-[3.05rem] flex h-9 w-9 items-center justify-center rounded-full text-sky shadow-glow; }
+  .education-card { @apply glass glow-edge rounded-2xl p-6; }
+  .education-type { @apply eyebrow mb-1; }
+  .education-school { @apply font-display text-lg font-semibold text-ink; }
+  .education-detail { @apply mt-1 text-sm text-muted; }
+
+  .contact-copy { @apply mx-auto mb-10 max-w-md text-muted; }
+  .contact-card { @apply glass-strong glow-edge mx-auto flex flex-col items-center gap-6 rounded-2xl p-8 sm:flex-row sm:justify-between; }
+  .contact-email { @apply flex items-center gap-3 font-mono text-sm text-ink; }
+  .contact-icon { @apply text-sky; }
+  .copy-button { @apply flex items-center gap-2 rounded-full bg-aurora-gradient px-5 py-2.5 font-mono text-sm font-medium text-void transition-transform hover:scale-105; }
+  .contact-socials { @apply mt-8 flex justify-center gap-5; }
+  .contact-social-link { @apply glass glow-edge flex h-12 w-12 items-center justify-center rounded-full text-ink; }
+
+  .footer { @apply border-t border-white/5 px-6 py-8; }
+  .footer-inner { @apply mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 text-sm text-muted sm:flex-row; }
+  .footer-credit { @apply font-mono; }
 }
