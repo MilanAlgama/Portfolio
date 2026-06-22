@@ -48,7 +48,7 @@ export default function Navbar() {
           href="#home"
           className="brand-link"
         >
-          MHA<span className="brand-dot">.</span>
+          <span className="brand-dot">Milan harsha</span>
         </a>
 
         <ul className="desktop-links">

@@ -1,4 +1,4 @@
-import CloudBackground from "./components/CloudBackground";
+//import CloudBackground from "./components/CloudBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -11,7 +11,7 @@ import Contact from "./components/Contact";
 export default function App() {
   return (
     <div className="page-shell">
-      <CloudBackground />
+      {/*<CloudBackground />*/}
       <div className="content-layer">
         <Navbar />
         <main>
