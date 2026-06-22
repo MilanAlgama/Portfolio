@@ -1,9 +1,9 @@
-name: React Deployment
+name: CD - Deploy Portfolio
 
 on:
   push:
     branches:
-      - main
+      - updates-v1
 
   workflow_dispatch:
 
@@ -14,11 +14,11 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
-    name: Build React App
+    name: Build Portfolio
     runs-on: ubuntu-latest
 
     steps:
@@ -29,31 +29,32 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build React project
+      - name: Build portfolio
         run: npm run build
 
-      - name: Setup GitHub Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload production files
+      - name: Upload production build
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
     name: Deploy to GitHub Pages
-    needs: build
-    runs-on: ubuntu-latest
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
+    runs-on: ubuntu-latest
+    needs: build
+
     steps:
-      - name: Deploy website
+      - name: Deploy portfolio
         id: deployment
         uses: actions/deploy-pages@v4
