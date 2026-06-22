@@ -1,4 +1,4 @@
-import "./App.css";
+import CloudBackground from "./components/CloudBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -7,21 +7,22 @@ import Projects from "./components/Projects";
 import Education from "./components/Education";
 import Contact from "./components/Contact";
 
-function App() {
-  return (
-    <div className="app">
-      <Navbar />
 
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Education/>
-        <Contact />
-      </main>
+export default function App() {
+  return (
+    <div className="page-shell">
+      <CloudBackground />
+      <div className="content-layer">
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Education />
+          <Contact />
+        </main>
+      </div>
     </div>
   );
 }
-
-export default App;

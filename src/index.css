@@ -16,6 +16,12 @@ body {
   overflow-x: hidden;
 }
 
+#root {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
