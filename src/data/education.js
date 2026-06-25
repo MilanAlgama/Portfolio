@@ -12,7 +12,7 @@ export const education = [
   },
   {
     school: "ICBT Campus",
-    detail: "Undergraduate Studies",
+    detail: "HND in Network Engineering & Cybersecurity",
     type: "Undergraduate",
   },
 ];
