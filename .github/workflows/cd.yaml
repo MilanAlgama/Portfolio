@@ -3,7 +3,7 @@ name: CD - Deploy Portfolio
 on:
   push:
     branches:
-      - updates-v1
+      - master
 
   workflow_dispatch:
 
